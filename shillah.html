@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Universe, Shillah Shee</title>
+    <style>
+        :root {
+            --neon-pink: #ff2a74;
+            --neon-purple: #b537f2;
+            --neon-cyan: #05d9e8;
+            --dark-bg: #0b0314;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            font-size: 2rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-purple);
+            animation: float Up 8s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-110vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        /* Neon Headers */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px var(--neon-pink),
+                0 0 20px var(--neon-pink),
+                0 0 40px var(--neon-purple);
+            animation: pulse 2s infinite alternate;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+            margin-bottom: 40px;
+        }
+
+        /* Interactive Quote Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--neon-pink);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 0 15px rgba(255, 42, 116, 0.3), inset 0 0 15px rgba(255, 42, 116, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 25px rgba(255, 42, 116, 0.6), inset 0 0 20px rgba(255, 42, 116, 0.3);
+            border-color: var(--neon-cyan);
+        }
+
+        .quote-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            font-style: italic;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: transparent;
+            border: 2px solid var(--neon-purple);
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #fff;
+            box-shadow: 0 0 10px rgba(181, 55, 242, 0.4);
+        }
+
+        .btn:hover {
+            background: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-pink);
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer/Counter */
+        .counter {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 5px #fff, 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-purple);
+            }
+            100% {
+                text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-pink), 0 0 35px var(--neon-pink), 0 0 60px var(--neon-purple), 0 0 80px var(--neon-pink);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="container">
+        <h1>SHILLAH SHEE</h1>
+        <h2>💖 Everything I Love About You 💖</h2>
+
+        <div class="card">
+            <div class="quote-text" id="quoteDisplay">Loading my love for you...</div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn" onclick="prevQuote()">← Previous</button>
+            <button class="btn" onclick="nextQuote()">Next →</button>
+        </div>
+
+        <div class="counter" id="counterDisplay">1 / 10</div>
+    </div>
+
+    <script>
+        // Array of custom love messages for Shillah Shee
+        const loveQuotes = [
+            "Shillah Shee, from the moment you walked into my life, you changed my entire world. I love you more than words can ever express.",
+            "I love the way your smile lights up even my darkest days. You are my absolute sunshine, Shillah.",
+            "You are not just my girlfriend; you are my best friend, my safest hiding place, and my favorite person in the whole universe.",
+            "I love how safe and incredibly loved I feel whenever I am with you. Your heart is my favorite place to be.",
+            "Shillah Shee, your kindness, your beauty, and your beautiful soul amaze me every single day.",
+            "They say perfection doesn't exist, but they clearly haven't seen you. You are absolutely perfect to me.",
+            "I love all the little things you do—the way you laugh, the way you look at me, and how you make everything better just by being there.",
+            "My love for you grows stronger with every single heartbeat. You are my today, my tomorrow, and my forever.",
+            "Thank you for being you, Shillah. Thank you for choosing me and for loving me as deeply as you do.",
+            "No matter where life takes us, my heart will always belong to you, Shillah Shee. You have all of me, always."
+        ];
+
+        let currentIndex = 0;
+
+        const quoteDisplay = document.getElementById('quoteDisplay');
+        const counterDisplay = document.getElementById('counterDisplay');
+        const heartsContainer = document.getElementById('heartsContainer');
+
+        // Function to update the displayed quote
+        function updateQuote(index) {
+            // Fade out effect
+            quoteDisplay.style.opacity = 0;
+            
+            setTimeout(() => {
+                quoteDisplay.textContent = loveQuotes[index];
+                counterDisplay.textContent = `${index + 1} / ${loveQuotes.length}`;
+                // Fade back in
+                quoteDisplay.style.opacity = 1;
+            }, 250);
+        }
+
+        function nextQuote() {
+            currentIndex = (currentIndex + 1) % loveQuotes.length;
+            updateQuote(currentIndex);
+            createBurstHearts();
+        }
+
+        function prevQuote() {
+            currentIndex = (currentIndex - 1 + loveQuotes.length) % loveQuotes.length;
+            updateQuote(currentIndex);
+            createBurstHearts();
+        }
+
+        // Generate ambient background floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Randomize heart types
+            const heartTypes = ['💖', '❤️', '💕', '✨', '💘'];
+            heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+            
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 5) + "s"; // 5-8 seconds
+            heart.style.fontSize = (Math.random() * 1.5 + 1) + "rem"; // 1-2.5rem
+            
+            heartsContainer.appendChild(heart);
+
+            // Remove heart after animation ends
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Extra hearts burst effect when clicking buttons
+        function createBurstHearts() {
+            for(let i=0; i<5; i++) {
+                setTimeout(createHeart, i * 150);
+            }
+        }
+
+        // Initialize
+        updateQuote(currentIndex);
+        // Continuously generate background hearts
+        setInterval(createHeart, 600);
+    </script>
+</body>
+  </html>
+  
